@@ -18,12 +18,13 @@ More info can be found using the following link http://www.cambiumnetworks.com/p
 ./elevator.py [--verbose] [--template=<sm.json>] [--update-firmware[=<fimrware.bin>]] [--username=ubnt] [--password=ubnt]  <ip-address>
 
 * If "--firmware" key is specified, then do the following:
- * copy firmware.bin to "/tmp/fwupdate.bin" on the device
- * execute "/sbin/fwupdate -m" command
+  * copy firmware.bin to "/tmp/fwupdate.bin" on the device
+  * execute "/sbin/fwupdate -m" command
 
 # Version 0.4
+./elevator.py [--verbose] [--template=<sm.json>] [--update-firmware[=<fimrware.bin>]] [--username=ubnt] [--password=ubnt]  <ip-address>
 
-* Extract version from firmware.bin
+* Extract version from firmware.bin and use it as suffix instead of hardcoded "3.3" in "/etc/persistent/.configured_3.3" filename
 
 # Version 0.3
 ./elevator.py [--verbose] [--template=<sm.json>] [--update-firmware[=<fimrware.bin>]] [--username=ubnt] [--password=ubnt] <ip-address or network>
