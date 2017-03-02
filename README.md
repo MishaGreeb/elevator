@@ -18,8 +18,8 @@ More info can be found using the following link http://www.cambiumnetworks.com/p
 ./elevator.py [--verbose] [--template=<sm.json>] [--update-firmware[=<fimrware.bin>]] [--username=ubnt] [--password=ubnt]  <ip-address>
 
 * If "--firmware" key is specified, then do the following:
-** copy firmware.bin to "/tmp/fwupdate.bin" on the device
-** execute "/sbin/fwupdate -m" command
+ * copy firmware.bin to "/tmp/fwupdate.bin" on the device
+ * execute "/sbin/fwupdate -m" command
 
 # Version 0.4
 
