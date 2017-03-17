@@ -89,7 +89,8 @@ if options.update_firmware:
 
 try:
     scp.put(options.template, "/etc/persistent/%s" % conf_name)
-    scp.put(options.update_firmware, "/tmp/fwupdate.bin")
+    if options.update_firmware:
+        scp.put(options.update_firmware, "/tmp/fwupdate.bin")
 except SCPException as error:
     tb = traceback.format_exc()
     print(tb)
