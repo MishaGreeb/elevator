@@ -1,0 +1,28 @@
+{
+	"wireless":
+	{
+		"@pref_ap[0]":
+		{
+			"ssid":	"TestSSID",
+			"security_method":	"5",
+			"key":	"VerySecretKey"
+		}
+	},
+	"network":
+	{
+		"mode":
+		{
+			"bridge_proto":	"1",
+			"bridge_ipaddr":	"192.168.1.33",
+			"bridge_gateway":	"192.168.1.1"
+		}
+	},
+	"devagent":
+	{
+		"main":
+		{
+			"cns_agent_id":	"CAMBIUM",
+			"cns_agent_pwd":	"BOARDINGKEY"
+		}
+	}
+}

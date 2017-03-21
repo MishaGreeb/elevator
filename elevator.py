@@ -1,6 +1,7 @@
 # coding: utf-8
 from scp import SCPClient, SCPException
-from optparse import OptionParser
+import argparse
+
 import traceback
 import paramiko
 import sys
@@ -12,16 +13,16 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 ######################
 # Setup              #
 ######################
-parser = OptionParser()
+parser = argparse.ArgumentParser()
 
-parser.add_option("-v", "--verbose", default=False, help="prints logs")
-parser.add_option("-t", "--template", default=os.path.join(current_dir, "sm.json"), help="template")
-parser.add_option("-f", "--update-firmware", default=False, help="update firmware")
-parser.add_option("-u", "--username", default="ubnt", help="username")
-parser.add_option("-p", "--password", default="ubnt", help="password")
-parser.add_option("-a", "--ip-address", help="[REQUIRED] ip-address")
+parser.add_argument("-v", "--verbose", action="store_true", default=False, help="increase output verbosity")
+parser.add_argument("-t", "--template", default=os.path.join(current_dir, "sm.json"), help="template filename to use")
+parser.add_argument("-f", "--update-firmware", default=False, help="firmware file image to use for elevation")
+parser.add_argument("-u", "--username", default="ubnt", help="ssh username")
+parser.add_argument("-p", "--password", default="ubnt", help="ssh password")
+parser.add_argument("ip_address", help="IP address")
 
-(options, args) = parser.parse_args()
+options = parser.parse_args()
 
 LOGGING = options.verbose
 
@@ -29,12 +30,6 @@ LOGGING = options.verbose
 ######################
 # Options validation #
 ######################
-if LOGGING:
-    print("Validating parameters...")
-
-if not options.ip_address:
-    parser.error("IP address not given")
-
 if not os.path.isfile(os.path.join(current_dir, options.template)):
     parser.error("File '%s' not found" % options.template)
 
@@ -69,7 +64,6 @@ try:
     )
 except paramiko.ssh_exception.AuthenticationException as error:
     tb = traceback.format_exc()
-    print(tb)
     print(error)
     sys.exit()
 
@@ -79,34 +73,31 @@ except paramiko.ssh_exception.AuthenticationException as error:
 ######################
 # Copy "sm.json" to "/etc/persistent/.configured_3.3" on the device
 scp = SCPClient(client.get_transport())
-conf_name = ".configured_3.3"
-if options.update_firmware:
-    filename, file_extension = os.path.splitext(options.update_firmware)
-    filename = filename.rsplit("-", 1)
-    if len(filename) > 1:
-        firmware_version = filename[-1]
-        conf_name = ".configured_%s" % firmware_version
+conf_name = ".configured_3.2"
 
 try:
-    scp.put(options.template, "/etc/persistent/%s" % conf_name)
+    scp.put(options.template, "/etc/persistent/mnt/config/%s" % conf_name)
+    if LOGGING:
+        print("config file copied")
+    stdin, stdout, stderr = client.exec_command("/usr/bin/cfgmtd -w")
+
+    if LOGGING:
+        for line in stderr:
+            print line,
+        print("config file saved to flash")
+
     if options.update_firmware:
         scp.put(options.update_firmware, "/tmp/fwupdate.bin")
-except SCPException as error:
+        if LOGGING:
+            print("Firmware copied")
+        stdin, stdout, stderr = client.exec_command("/sbin/fwupdate -m")
+        if LOGGING:
+            print("Firmware update started")
+except (SCPException,paramiko.SSHException)  as error:
     tb = traceback.format_exc()
-    print(tb)
-    sys.exit()
-
-if LOGGING:
-    print("Start firmware updating...")
-
-try:
-    stdin, stdout, stderr = client.exec_command("/sbin/fwupdate -m")
-except paramiko.SSHException as error:
-    tb = traceback.format_exc()
-    print(tb)
     print(error)
     sys.exit()
 
 client.close()
 
-print("Done")
+print("Elevation complete")

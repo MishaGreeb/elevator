@@ -2,31 +2,36 @@
 
 ### What is elevator? ###
 
-* Easy tool to elevate UBNT units
+* Easy tool to elevate wireless equipment
 
 More info can be found using the following link http://www.cambiumnetworks.com/products/access/epmp-elevate/
 
-# Version 0.1
-./elevator.py [--verbose] [--template=sm.json] [--username=ubnt] [--password=ubnt] <ip-address>
+# Installation 
+git clone https://
+pip install -r requirements.txt
 
-* If no options specified default values should be used(eg "sm.json","ubnt","ubnt" and etc)
-* Tool copies "sm.json" to "/etc/persistent/.configured_3.3" on the device
-* execute "save" command
-* Tool should print verbose inoformation, if "verbose" key is specified
+# Usage
+usage: elevator.py [-h] [-v] [-t TEMPLATE] [-f UPDATE_FIRMWARE] [-u USERNAME]
+                   [-p PASSWORD]
+                   ip_address
 
-# Version 0.2
-./elevator.py [--verbose] [--template=<sm.json>] [--update-firmware[=<fimrware.bin>]] [--username=ubnt] [--password=ubnt]  <ip-address>
+positional arguments:
+  ip_address            IP address
 
-* If "--firmware" key is specified, then do the following:
-  * copy firmware.bin to "/tmp/fwupdate.bin" on the device
-  * execute "/sbin/fwupdate -m" command
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --verbose         increase output verbosity
+  -t TEMPLATE, --template TEMPLATE
+                        template filename to use
+  -f UPDATE_FIRMWARE, --update-firmware UPDATE_FIRMWARE
+                        firmware file image to use for elevation
+  -u USERNAME, --username USERNAME
+                        ssh username
+  -p PASSWORD, --password PASSWORD
+                        ssh password
 
-# Version 0.4
-./elevator.py [--verbose] [--template=<sm.json>] [--update-firmware[=<fimrware.bin>]] [--username=ubnt] [--password=ubnt]  <ip-address>
+#Example
 
-* Extract version from firmware.bin and use it as suffix instead of hardcoded "3.3" in "/etc/persistent/.configured_3.3" filename
-
-# Version 0.3
-./elevator.py [--verbose] [--template=<sm.json>] [--update-firmware[=<fimrware.bin>]] [--username=ubnt] [--password=ubnt] <ip-address or network>
-
-* If network is specified, then elevator will go try to elevate all units one by one
+* Modify sm.json the way you like
+* Elevate:
+python elevator.py -u ubnt -p password -t sm.json -v 192.168.1.39
