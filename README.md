@@ -2,14 +2,14 @@
 
 ### What is elevator? ###
 
-* Easy command line tool to elevate wireless equipment
+# Easy command line tool to Elevate wireless equipment
 
 More info can be found using the following link http://www.cambiumnetworks.com/products/access/epmp-elevate/
 
 # Installation 
-git clone https://github.com/m0sia/elevator.git
-cd elevator
-pip install -r requirements.txt
+* git clone https://github.com/m0sia/elevator.git
+* cd elevator
+* pip install -r requirements.txt
 
 # Usage
 usage: elevator.py [-h] [-v] [-t TEMPLATE] [-f UPDATE_FIRMWARE] [-u USERNAME]
@@ -31,7 +31,7 @@ optional arguments:
   -p PASSWORD, --password PASSWORD
                         ssh password
 
-#Example
+# Example
 
 * Modify sm.json the way you like
 * Elevate:
