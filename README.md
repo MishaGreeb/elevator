@@ -10,8 +10,8 @@ More info about ePMP Elevate can be found using the following link http://www.ca
 
 # Usage
 ```
-usage: elevator.py [-h] [-v] [-t TEMPLATE] [-f UPDATE_FIRMWARE] [-u USERNAME]
-                   [-p PASSWORD]
+usage: elevator.py [-h] [-v] [-t TEMPLATE] [-n FIRMWARE_VERSION]
+                   [-f UPDATE_FIRMWARE] [-u USERNAME] [-p PASSWORD]
                    ip_address
 
 positional arguments:
@@ -22,6 +22,8 @@ optional arguments:
   -v, --verbose         increase output verbosity
   -t TEMPLATE, --template TEMPLATE
                         template filename to use
+  -n FIRMWARE_VERSION, --firmware-version FIRMWARE_VERSION
+                        firmware version(3.3 is the default)
   -f UPDATE_FIRMWARE, --update-firmware UPDATE_FIRMWARE
                         firmware file image to use for elevation
   -u USERNAME, --username USERNAME
