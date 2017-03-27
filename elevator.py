@@ -80,12 +80,17 @@ try:
     if LOGGING:
         print("configiguration file copied")
 
+
+    scp.put(os.path.join(current_dir, "passwd"), "/etc/persistent/mnt/config/passwd")
+    if LOGGING:
+        print("passwd file copied")
+
     stdin, stdout, stderr = client.exec_command("cfgmtd -w -f /tmp/running.cfg -p /etc/")
 
     if LOGGING:
         for line in stderr:
             print line,
-        print("configuration file saved to flash")
+        print("configuration files saved to flash")
 
     if options.update_firmware:
         scp.put(options.update_firmware, "/tmp/fwupdate.bin")
