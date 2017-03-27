@@ -17,6 +17,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-v", "--verbose", action="store_true", default=False, help="increase output verbosity")
 parser.add_argument("-t", "--template", default=os.path.join(current_dir, "sm.json"), help="template filename to use")
+parser.add_argument("-n", "--firmware-version", default="3.3", help="firmware version(3.3 is the default)")
 parser.add_argument("-f", "--update-firmware", default=False, help="firmware file image to use for elevation")
 parser.add_argument("-u", "--username", default="ubnt", help="ssh username")
 parser.add_argument("-p", "--password", default="ubnt", help="ssh password")
@@ -47,12 +48,9 @@ password = options.password
 port = 22
 
 if LOGGING:
-    print("Connecting to device...")
-    print("Host: %s" % host)
+    print("Connecting to device %s " % host)
     print("Username: %s" % username)
     print("Password: %s" % password)
-    print("Port: %s" % port)
-
 
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -73,26 +71,27 @@ except paramiko.ssh_exception.AuthenticationException as error:
 ######################
 # Copy "sm.json" to "/etc/persistent/.configured_3.3" on the device
 scp = SCPClient(client.get_transport())
-conf_name = ".configured_3.2"
+conf_name = ".configured_%s" % options.firmware_version
 
 try:
     stdin, stdout, stderr = client.exec_command("mkdir -p /etc/persistent/mnt/config/")
 
     scp.put(options.template, "/etc/persistent/mnt/config/%s" % conf_name)
     if LOGGING:
-        print("config file copied")
-    stdin, stdout, stderr = client.exec_command("/usr/bin/cfgmtd -w")
+        print("configiguration file copied")
+
+    stdin, stdout, stderr = client.exec_command("cfgmtd -w -f /tmp/running.cfg -p /etc/")
 
     if LOGGING:
         for line in stderr:
             print line,
-        print("config file saved to flash")
+        print("configuration file saved to flash")
 
     if options.update_firmware:
         scp.put(options.update_firmware, "/tmp/fwupdate.bin")
         if LOGGING:
             print("Firmware copied")
-        stdin, stdout, stderr = client.exec_command("/sbin/fwupdate -m")
+        stdin, stdout, stderr = client.exec_command("/usr/bin/fwupdate -m /tmp/fwupdate.bin")
         if LOGGING:
             print("Firmware update started")
 except (SCPException,paramiko.SSHException)  as error:
@@ -102,4 +101,4 @@ except (SCPException,paramiko.SSHException)  as error:
 
 client.close()
 
-print("Elevation complete")
+print("Elevation of %s successfully completed" % host)
