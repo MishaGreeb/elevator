@@ -89,7 +89,7 @@ try:
 
     if LOGGING:
         for line in stderr:
-            print line,
+            print(line)
         print("configuration files saved to flash")
 
     if options.update_firmware:
