@@ -76,6 +76,8 @@ scp = SCPClient(client.get_transport())
 conf_name = ".configured_3.2"
 
 try:
+    stdin, stdout, stderr = client.exec_command("mkdir -p /etc/persistent/mnt/config/")
+
     scp.put(options.template, "/etc/persistent/mnt/config/%s" % conf_name)
     if LOGGING:
         print("config file copied")
