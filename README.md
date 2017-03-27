@@ -32,5 +32,8 @@ optional arguments:
 # Example
 
 * Modify sm.json the way you like
-* Elevate:
-python elevator.py -u ubnt -p password -t sm.json -v 192.168.1.39
+* Elevate with the following command
+** Without fimrware update
+python elevator.py -u ubnt -p password -t sm.json -n 3.3 -v 192.168.1.39
+** With firwmare update:
+python elevator.py -v -u ubnt -p password -t sm.json -n 3.3 -f UBNTXW-ubntxw-squashfs-factory-3.3.bin 192.168.1.20
