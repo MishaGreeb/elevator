@@ -3,10 +3,13 @@
 
 More info about ePMP Elevate can be found using the following link http://www.cambiumnetworks.com/products/access/epmp-elevate/
 
-# Installation 
+# Installation for macOS or Linux
 * git clone https://github.com/m0sia/elevator.git
 * cd elevator
 * pip install -r requirements.txt
+
+# Windows version with simple GUI
+* https://app.box.com/s/fc2qzgk2l0azejvg2q5m8u9enmo3roid
 
 # Usage
 ```
