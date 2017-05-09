@@ -1,7 +1,7 @@
 # Elevator #
-# Easy command line tool to Elevate wireless equipment
+# Documentation and HowTo
 
-More info about ePMP Elevate can be found using the following link http://www.cambiumnetworks.com/products/access/epmp-elevate/
+http://community.cambiumnetworks.com/t5/ePMP-FAQ/ePMP-Elevate-ePMP-Elevator-Tool-Configuration/m-p/72538
 
 # Installation for macOS or Linux
 * git clone https://github.com/m0sia/elevator.git
