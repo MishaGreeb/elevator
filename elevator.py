@@ -21,6 +21,7 @@ parser.add_argument("-n", "--firmware-version", default="3.3", help="firmware ve
 parser.add_argument("-f", "--update-firmware", default=False, help="firmware file image to use for elevation")
 parser.add_argument("-u", "--username", default="ubnt", help="ssh username")
 parser.add_argument("-p", "--password", default="ubnt", help="ssh password")
+parser.add_argument("-P", "--port", default="22", help="ssh port")
 parser.add_argument("ip_address", help="IP address")
 
 options = parser.parse_args()
@@ -45,7 +46,7 @@ if options.update_firmware:
 host = options.ip_address
 username = options.username
 password = options.password
-port = 22
+port = options.port
 
 if LOGGING:
     print("Connecting to device %s " % host)
