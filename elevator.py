@@ -46,7 +46,7 @@ if options.update_firmware:
 host = options.ip_address
 username = options.username
 password = options.password
-port = options.port
+port = int(options.port)
 
 if LOGGING:
     print("Connecting to device %s " % host)
