@@ -85,9 +85,10 @@ try:
     if LOGGING:
         print("configiguration file copied")
 
-    scp.put(options.cambium_id, "/etc/persistent/mnt/config/cambium_id")
-    if LOGGING:
-        print("configiguration file copied")
+    if options.cambium_id:
+        scp.put(options.cambium_id, "/etc/persistent/mnt/config/cambium_id")
+        if LOGGING:
+            print("configiguration file copied")
 
     scp.put(os.path.join(current_dir, "passwd"), "/etc/persistent/mnt/config/passwd")
     if LOGGING:
