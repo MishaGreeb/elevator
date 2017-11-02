@@ -7,7 +7,11 @@ import paramiko
 import sys
 import os
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
+try:
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+except NameError:  # We are the main py2exe script, not a module
+    import sys
+    current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 
 ######################
