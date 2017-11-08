@@ -12,7 +12,7 @@ install:
 build: off
 
 after_test:
-  - "build.cmd %PYTHON%\\python.exe setup.py py2exe"
+  - "%PYTHON%\\python.exe setup.py py2exe"
 
 artifacts:
   - path: dist\*
