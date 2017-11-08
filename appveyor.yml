@@ -1,0 +1,18 @@
+environment:
+
+  matrix:
+    - PYTHON: "C:\\Python35"
+      DISTUTILS_USE_SDK: "1"
+    - PYTHON: "C:\\Python35-x64"
+
+install:
+  # We need wheel installed to build wheels
+  - "%PYTHON%\\python.exe -m pip install requirement.txt"
+
+build: off
+
+after_test:
+  - "build.cmd %PYTHON%\\python.exe setup.py py2exe"
+
+artifacts:
+  - path: dist\*
