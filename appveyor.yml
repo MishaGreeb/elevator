@@ -16,4 +16,4 @@ after_test:
   - "7z a elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip dist\\*"
 
 artifacts:
-  - path: elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip.zip
+  - path: elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip
