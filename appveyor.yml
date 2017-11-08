@@ -12,6 +12,8 @@ build: off
 
 after_test:
   - "%PYTHON%\\python.exe setup.py py2exe"
+  - "7z a elevator-win32-GUI.zip dist\*"
+  - "7z a elevator-win32-GUI.zip dist\*"
 
 artifacts:
-  - path: dist\*
+  - path: elevator-win32-GUI.zip
