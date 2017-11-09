@@ -1,12 +1,11 @@
 environment:
 
   matrix:
-    - PYTHON: "C:\\Python33"
+    - PYTHON: "C:\\Python34"
    
 install:
   # We need wheel installed to build wheels
   cryptography
-  - "%PYTHON%\\python.exe -m pip install --only-binary cryptography"
   - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
   - "%PYTHON%\\python.exe -m pip install py2exe cffi"
 
