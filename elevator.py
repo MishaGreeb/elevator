@@ -6,7 +6,7 @@ import traceback
 import paramiko
 import sys
 import os
-import _cffi_backend, cryptography.hazmat.bindings.openssl
+import _cffi_backend
 
 try:
     current_dir = os.path.dirname(os.path.abspath(__file__))
