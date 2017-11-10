@@ -9,7 +9,10 @@ http://community.cambiumnetworks.com/t5/ePMP-FAQ/ePMP-Elevate-ePMP-Elevator-Tool
 * pip install -r requirements.txt
 
 # Windows version with simple GUI
-* https://app.box.com/s/fc2qzgk2l0azejvg2q5m8u9enmo3roid
+![https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true)
+
+You can download the latest build of Windows version using the following link:
+https://ci.appveyor.com/project/m0sia/elevator/build/artifacts
 
 # Usage
 ```
