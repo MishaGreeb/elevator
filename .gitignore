@@ -87,3 +87,12 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Test firmware
+UBNTXM-3.5-elevate.bin
+XM.ar7240.v13.5.0.kernel
+XM.ar7240.v13.5.0.rootfs
+XM.ar7240.v13.5.0.txt
+
+# PycharmProjects
+.idea
