@@ -44,7 +44,7 @@ def extract_files(file):
     from platform import system
     os = system()
     if os == 'Linux':
-        call(['./fwsplit', file], shell = True)
+        line = check_output(["./fwsplit", file])
     elif os == 'Windows':
         line = check_output(['fwsplit.exe',file], shell = True)
     lines = line.splitlines()
