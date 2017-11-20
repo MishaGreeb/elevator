@@ -164,3 +164,5 @@ except (SCPException, paramiko.SSHException) as error:
     sys.exit()
 
 client.close()
+
+print("Elevation of %s successfully completed" % host)
