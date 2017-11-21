@@ -14,6 +14,7 @@ after_test:
   - "%PYTHON%\\python.exe setup.py py2exe"
   - "7z a elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip .\\dist\\*"
   - "7z a elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip .\\win32\\*"
+  - "7z a elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip .\\mips\\*"
   - "7z a elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip sm.json passwd cambium_id"
 
 artifacts:
