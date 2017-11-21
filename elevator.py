@@ -37,7 +37,7 @@ options = parser.parse_args()
 LOGGING = options.verbose
 
 def fwinfo(txt):
-    txt = txt.replace('.', '')
+    txt = txt.decode('utf8').replace('.', '')
     typefirmware = txt[:2]
     verfirmware = int(txt[3:6])
     if verfirmware > 604:
@@ -60,7 +60,6 @@ def extract_files(file):
             firmware_kernel = line.strip("\t\n ")
         if ".rootfs" in line:
             firmware_rootfs = line.strip("\t\n ")
-    #print "Kernel: %s; Rotfs: %s" % (kernel, rootfs)
     return firmware_kernel, firmware_rootfs
 
 ######################
