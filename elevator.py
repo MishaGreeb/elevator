@@ -47,14 +47,14 @@ def fwinfo(txt):
     return typefirmware, firmware_signed
 
 def extract_files(file):
-    from subprocess import call,check_output
+    from subprocess import check_output
     from platform import system
     os = system()
     if os == 'Linux':
         line = check_output(["./fwsplit", file])
     elif os == 'Windows':
         line = check_output(['fwsplit.exe',file], shell = True)
-    lines = line.splitlines()
+    lines = line.decode('utf8').splitlines()
     for line in lines:
         if ".kernel" in line:
             firmware_kernel = line.strip("\t\n ")
