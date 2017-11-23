@@ -1,0 +1,21 @@
+environment:
+
+  matrix:
+    - PYTHON: "C:\\Python34"
+   
+install:
+  # We need wheel installed to build wheels
+  - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
+  - "%PYTHON%\\python.exe -m pip install py2exe cffi"
+
+build: off
+
+after_test:
+  - "%PYTHON%\\python.exe setup.py py2exe"
+  - "7z a elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip .\\dist\\*"
+  - "7z a elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip .\\win32\\*"
+  - "7z a elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip .\\mips\\*"
+  - "7z a elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip sm.json passwd cambium_id"
+
+artifacts:
+  - path: elevator-win32-GUI-%APPVEYOR_BUILD_VERSION%.zip
