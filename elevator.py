@@ -10,6 +10,7 @@ import os
 import _cffi_backend
 import socket
 import time
+import json
 
 try:
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -24,7 +25,6 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-v", "--verbose", action="store_true", default=False, help="increase output verbosity")
 parser.add_argument("-t", "--template", default=os.path.join(current_dir, "sm.json"), help="template filename to use")
-parser.add_argument("-c", "--cambium-id", default=os.path.join(current_dir, "cambium_id"), help="template filename to use")
 parser.add_argument("-n", "--firmware-version", default="3.3", help="firmware version(3.3 is the default)")
 parser.add_argument("-f", "--update-firmware", default=False, help="firmware file image to use for elevation")
 parser.add_argument("-u", "--username", default="ubnt", help="ssh username")
@@ -62,14 +62,23 @@ def extract_files(file):
             firmware_rootfs = line.strip("\t\n ")
     return firmware_kernel, firmware_rootfs
 
+def get_cambium_id(file):
+    data = json.load(open(file))
+    result = ""
+    try:
+        result += data["devagent"]["main"]["cns_agent_id"]
+        result += ":"
+        result += data["devagent"]["main"]["cns_agent_pwd"]
+    except:
+        result = ""
+
+    return result
+
 ######################
 # Options validation #
 ######################
 if not os.path.isfile(os.path.join(current_dir, options.template)):
     parser.error("File '%s' not found" % options.template)
-
-if not os.path.isfile(os.path.join(current_dir, options.cambium_id)):
-    parser.error("File '%s' not found" % options.cambium_id)
 
 if options.update_firmware:
     if not os.path.isfile(os.path.join(current_dir, options.update_firmware)):
@@ -116,12 +125,13 @@ try:
 
     scp.put(options.template, "/etc/persistent/mnt/config/%s" % conf_name)
     if LOGGING:
-        print("configiguration file copied")
+        print("configuration file copied")
 
-    if options.cambium_id:
-        scp.put(options.cambium_id, "/etc/persistent/mnt/config/cambium_id")
+    cambium_id_data = get_cambium_id(os.path.join(current_dir, options.template))
+    if cambium_id_data:
+        stdin, stdout, stderr = client.exec_command('echo "'+cambium_id_data+'" > /etc/persistent/mnt/config/cambium_id')
         if LOGGING:
-            print("configiguration file copied")
+            print("configuration file copied")
 
     scp.put(os.path.join(current_dir, "passwd"), "/etc/persistent/mnt/config/passwd")
     if LOGGING:
